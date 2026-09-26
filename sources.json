@@ -1,0 +1,93 @@
+{
+  "_uitleg": "Bronnen voor Voorpagina. Voeg een bron toe door een blok te kopiëren. 'topics' bij een feed = onderwerp dat altijd geldt voor die feed. 'fallback' = onderwerp als er geen ander onderwerp herkend wordt. 'on' = standaard aan in de app.",
+  "groups": [
+    {"id": "nl", "label": "Nederlands nieuws"},
+    {"id": "fin", "label": "Financieel"},
+    {"id": "int", "label": "Internationaal"},
+    {"id": "it", "label": "IT & tech"},
+    {"id": "woon", "label": "Woningcorporaties"}
+  ],
+  "sources": [
+    {"id": "nos", "name": "NOS", "group": "nl", "lang": "nl", "on": true, "fallback": "binnenland",
+     "feeds": [
+       {"url": "https://feeds.nos.nl/nosnieuwsalgemeen"},
+       {"url": "https://feeds.nos.nl/nosnieuwsbinnenland", "topics": ["binnenland"]},
+       {"url": "https://feeds.nos.nl/nosnieuwsbuitenland", "topics": ["buitenland"]},
+       {"url": "https://feeds.nos.nl/nosnieuwspolitiek", "topics": ["politiek"]},
+       {"url": "https://feeds.nos.nl/nosnieuwseconomie", "topics": ["economie"]},
+       {"url": "https://feeds.nos.nl/nosnieuwstech", "topics": ["tech"]}
+     ]},
+    {"id": "nu", "name": "NU.nl", "group": "nl", "lang": "nl", "on": true, "fallback": "binnenland",
+     "feeds": [
+       {"url": "https://www.nu.nl/rss/Algemeen"},
+       {"url": "https://www.nu.nl/rss/Economie", "topics": ["economie"]},
+       {"url": "https://www.nu.nl/rss/Tech", "topics": ["tech"]}
+     ]},
+    {"id": "vk", "name": "de Volkskrant", "group": "nl", "lang": "nl", "on": true, "paywall": true, "fallback": "binnenland",
+     "feeds": [{"url": "https://www.volkskrant.nl/voorpagina/rss.xml"}]},
+    {"id": "nrc", "name": "NRC", "group": "nl", "lang": "nl", "on": true, "paywall": true, "fallback": "binnenland",
+     "feeds": [{"url": "https://www.nrc.nl/rss/"}]},
+    {"id": "trouw", "name": "Trouw", "group": "nl", "lang": "nl", "on": false, "paywall": true, "fallback": "binnenland",
+     "feeds": [{"url": "https://www.trouw.nl/voorpagina/rss.xml"}]},
+    {"id": "ad", "name": "AD", "group": "nl", "lang": "nl", "on": false, "fallback": "binnenland",
+     "feeds": [{"url": "https://www.ad.nl/home/rss.xml"}]},
+
+    {"id": "fd", "name": "FD", "group": "fin", "lang": "nl", "on": true, "paywall": true, "fallback": "economie",
+     "feeds": [{"url": "https://fd.nl/?rss", "topics": ["economie"]}]},
+    {"id": "ft", "name": "Financial Times", "group": "fin", "lang": "en", "on": true, "paywall": true, "fallback": "economie",
+     "feeds": [
+       {"url": "https://www.ft.com/rss/home"},
+       {"url": "https://www.ft.com/technology?format=rss", "topics": ["tech"]}
+     ]},
+
+    {"id": "nyt", "name": "New York Times", "group": "int", "lang": "en", "on": true, "paywall": true, "fallback": "buitenland",
+     "feeds": [
+       {"url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"},
+       {"url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml", "topics": ["buitenland"]},
+       {"url": "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml", "topics": ["tech"]},
+       {"url": "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml", "topics": ["economie"]}
+     ]},
+    {"id": "bbc", "name": "BBC News", "group": "int", "lang": "en", "on": false, "fallback": "buitenland",
+     "feeds": [{"url": "https://feeds.bbci.co.uk/news/world/rss.xml", "topics": ["buitenland"]}]},
+    {"id": "guardian", "name": "The Guardian", "group": "int", "lang": "en", "on": false, "fallback": "buitenland",
+     "feeds": [{"url": "https://www.theguardian.com/world/rss", "topics": ["buitenland"]}]},
+
+    {"id": "tweakers", "name": "Tweakers", "group": "it", "lang": "nl", "on": true, "fallback": "tech",
+     "feeds": [{"url": "https://tweakers.net/feeds/nieuws.xml", "topics": ["tech"]}]},
+    {"id": "computable", "name": "Computable", "group": "it", "lang": "nl", "on": true, "fallback": "tech",
+     "feeds": [{"url": "https://www.computable.nl/feed/", "topics": ["tech"]}]},
+    {"id": "agconnect", "name": "AG Connect", "group": "it", "lang": "nl", "on": true, "fallback": "tech",
+     "feeds": [{"url": "https://www.agconnect.nl/rss.xml", "topics": ["tech"]}]},
+    {"id": "techzine", "name": "Techzine", "group": "it", "lang": "nl", "on": true, "fallback": "tech",
+     "feeds": [{"url": "https://www.techzine.nl/feed/", "topics": ["tech"]}]},
+    {"id": "securitynl", "name": "Security.nl", "group": "it", "lang": "nl", "on": true, "fallback": "security",
+     "feeds": [{"url": "https://www.security.nl/rss/headlines.xml", "topics": ["security"]}]},
+    {"id": "emerce", "name": "Emerce", "group": "it", "lang": "nl", "on": false, "fallback": "tech",
+     "feeds": [{"url": "https://www.emerce.nl/feed", "topics": ["tech"]}]},
+    {"id": "verge", "name": "The Verge", "group": "it", "lang": "en", "on": false, "fallback": "tech",
+     "feeds": [{"url": "https://www.theverge.com/rss/index.xml", "topics": ["tech"]}]},
+
+    {"id": "gn-corporaties", "name": "Corporatienieuws", "group": "woon", "lang": "nl", "on": true, "fallback": "wonen", "aggregator": true,
+     "note": "Zoekt via Google Nieuws in alle Nederlandse media",
+     "feeds": [{"url": "https://news.google.com/rss/search?q=woningcorporatie+OR+woningcorporaties+OR+Aedes+when:7d&hl=nl&gl=NL&ceid=NL:nl", "topics": ["wonen"]}]},
+    {"id": "gn-corpo-ict", "name": "Corporaties & ICT", "group": "woon", "lang": "nl", "on": true, "fallback": "wonen", "aggregator": true,
+     "note": "Google Nieuws: woningcorporaties in combinatie met ICT, AI en digitalisering",
+     "feeds": [{"url": "https://news.google.com/rss/search?q=woningcorporatie+(ICT+OR+AI+OR+digitalisering+OR+data+OR+cyber)+when:14d&hl=nl&gl=NL&ceid=NL:nl", "topics": ["wonen", "tech"]}]},
+    {"id": "corporatiegids", "name": "CorporatieGids", "group": "woon", "lang": "nl", "on": true, "fallback": "wonen",
+     "feeds": [{"url": "https://www.corporatiegids.nl/rss", "topics": ["wonen"]}]}
+  ],
+  "topics": [
+    {"id": "binnenland", "label": "Binnenland", "kw": []},
+    {"id": "politiek", "label": "Politiek", "kw": ["kabinet", "tweede kamer", "kamerleden", "minister", "premier", "coalitie", "formatie", "verkiezing", "partij", "vvd", "d66", "cda", "pvv", "groenlinks", "christenunie", "jetten", "motie", "senaat", "eerste kamer", "parliament", "election", "senate", "congress", "white house", "prime minister"]},
+    {"id": "buitenland", "label": "Buitenland", "kw": ["oekraïne", "rusland", "israël", "gaza", "china", "trump", "poetin", "navo", "vn ", "verenigde naties", "ukraine", "russia", "israel", "nato", "united nations", "beijing", "washington", "brussel", "europese commissie"]},
+    {"id": "economie", "label": "Economie", "kw": ["economie", "inflatie", "rente", "beurs", "aandeel", "aandelen", "ecb", "dnb", "winst", "omzet", "overname", "bank", "banken", "begroting", "belasting", "werkloosheid", "investeerder", "faillissement", "economy", "inflation", "interest rate", "stocks", "shares", "earnings", "revenue", "acquisition", "merger", "federal reserve", "wall street", "tariff", "investor"]},
+    {"id": "tech", "label": "Tech & IT", "kw": ["software", "cloud", "microsoft", "google", "apple", "amazon", "meta", "chip", "chips", "smartphone", "saas", "datacenter", "digitaal", "digitalisering", "ict", "it-", "app ", "platform", "technology", "tech ", "nvidia", "asml", "copilot", "azure", "sap", "servicenow"]},
+    {"id": "ai", "label": "AI", "kw": ["ai", "ai-", "kunstmatige intelligentie", "artificial intelligence", "chatgpt", "openai", "anthropic", "claude", "gemini", "llm", "taalmodel", "machine learning", "generatieve", "ai-agent", "copilot"]},
+    {"id": "security", "label": "Cybersecurity", "kw": ["hack", "hacker", "hackers", "gehackt", "datalek", "ransomware", "phishing", "kwetsbaarheid", "lek ", "cyber", "cyberaanval", "malware", "afgeperst", "nis2", "cyberbeveiligingswet", "breach", "vulnerability", "privacy", "autoriteit persoonsgegevens"]},
+    {"id": "wonen", "label": "Wonen & corporaties", "kw": ["woningcorporatie", "woningcorporaties", "corporatie", "aedes", "huurwoning", "huurwoningen", "sociale huur", "huurders", "huurverhoging", "woningbouw", "woningmarkt", "woningtekort", "volkshuisvesting", "huizenprijzen", "hypotheek", "nieuwbouw", "woonbond", "housing", "rent "]},
+    {"id": "klimaat", "label": "Klimaat & energie", "kw": ["klimaat", "energie", "stikstof", "co2", "uitstoot", "duurzaam", "verduurzaming", "gas", "gasopslag", "zonnepanelen", "windpark", "warmtepomp", "climate", "energy", "emissions", "renewable"]},
+    {"id": "wetenschap", "label": "Wetenschap & zorg", "kw": ["wetenschap", "universiteit", "studie", "ziekenhuis", "zorg", "gezondheid", "virus", "vaccin", "ruimtevaart", "nasa", "esa", "research", "scientists", "health", "hospital"]},
+    {"id": "sport", "label": "Sport", "kw": ["voetbal", "eredivisie", "ajax", "psv", "feyenoord", "oranje", "formule 1", "verstappen", "wielrennen", "tennis", "schaatsen", "olympische", "wk ", "ek ", "champions league", "football", "soccer"]},
+    {"id": "cultuur", "label": "Cultuur & media", "kw": ["film", "muziek", "museum", "boek", "theater", "concert", "tv-serie", "netflix", "festival", "kunstenaar", "tentoonstelling"]}
+  ]
+}

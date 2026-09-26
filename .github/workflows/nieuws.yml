@@ -1,0 +1,76 @@
+name: Nieuws ophalen
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"   # elk halfuur
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths: ["site/**", "sources.json", "scripts/**", ".github/workflows/**"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bouwen:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installeren
+        run: pip install -r requirements.txt
+
+      # eerder opgehaalde (versleutelde) artikelteksten hergebruiken
+      - name: Artikelteksten van vorige run
+        uses: actions/cache/restore@v4
+        with:
+          path: site/data/r
+          key: lezer-${{ github.run_id }}
+          restore-keys: lezer-
+
+      - name: Feeds ophalen en verhalen groeperen
+        env:
+          READER_KEY: ${{ secrets.READER_KEY }}
+        run: |
+          OWNER="${GITHUB_REPOSITORY_OWNER,,}"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          export PREV_URL="https://${OWNER}.github.io/${REPO}/data/articles.json"
+          python scripts/fetch_news.py
+
+      - name: Artikelteksten bewaren voor volgende run
+        uses: actions/cache/save@v4
+        with:
+          path: site/data/r
+          key: lezer-${{ github.run_id }}
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+      # GitHub zet geplande taken uit na 60 dagen zonder activiteit; één lege commit per week voorkomt dat.
+      - name: Wekelijkse keep-alive
+        if: github.event_name == 'schedule'
+        run: |
+          if [ "$(date -u +%u%H)" = "103" ] && [ "$(date -u +%M)" -lt 30 ]; then
+            git config user.name "voorpagina-bot"
+            git config user.email "voorpagina-bot@users.noreply.github.com"
+            git commit --allow-empty -m "keep-alive"
+            git push
+          fi

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voorpagina</title>
+<meta name="description" content="Jouw eigen voorpagina: nieuws uit de bronnen die jij kiest, zonder dubbele verhalen.">
+<meta name="theme-color" content="#f3f4f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1012" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Voorpagina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,500..700&family=Schibsted+Grotesk:wght@400..700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--APP-START-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-foryou" viewBox="0 0 24 24"><path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 16v4M16.5 18h4"/></symbol>
+  <symbol id="i-latest" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-discover" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
+  <symbol id="i-saved" viewBox="0 0 24 24"><path d="M6.5 3.5h11v17l-5.5-3.8-5.5 3.8z"/></symbol>
+  <symbol id="i-sources" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M7.5 10.5v9.5H4.5v-9.5zM7.5 10.5l3.7-6.7c1.4 0 2.6 1.2 2.6 2.6v3.1h5c1.3 0 2.2 1.2 1.9 2.4l-1.6 6.6c-.2.9-1 1.5-1.9 1.5H7.5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M16.5 13.5V4h3v9.5zM16.5 13.5l-3.7 6.7c-1.4 0-2.6-1.2-2.6-2.6v-3.1h-5c-1.3 0-2.2-1.2-1.9-2.4l1.6-6.6c.2-.9 1-1.5 1.9-1.5h9.7"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 11.5a7.5 7.5 0 1 1-2.2-5.3L19.5 8.5"/><path d="M19.5 4v4.5H15"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 4l8.5 4.5L12 13 3.5 8.5z"/><path d="M3.5 12.5L12 17l8.5-4.5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M14.5 5.5L8 12l6.5 6.5"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4.5h5.5V10M19.5 4.5L11 13M17 13.5v5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><path d="M4 18l4.5-12L13 18M5.7 14h5.6M15 18l3-7.5 3 7.5M16 16h4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="3.5"/><path d="M10.5 12.5L19 4M16 7l2.5 2.5M14 9l2 2"/></symbol>
+</svg>
+
+<header class="masthead" id="masthead">
+  <div class="wrap mast-row">
+    <div class="brand">
+      <span class="date" id="today"></span>
+      <h1>Voorpagina<span class="dot">.</span></h1>
+    </div>
+    <div class="mast-tools">
+      <div class="updated" id="updated"></div>
+      <button class="icon-btn" id="refresh" type="button" aria-label="Nieuws verversen" title="Verversen"><svg class="i"><use href="#i-refresh"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="view" aria-live="polite">
+  <div class="feed skeleton" aria-hidden="true">
+    <div class="story"><div class="sk" style="height:180px;border-radius:14px"></div><div class="sk" style="width:90%;height:22px"></div><div class="sk" style="width:70%;height:22px"></div></div>
+    <div class="story"><div class="sk" style="width:85%;height:18px"></div><div class="sk" style="width:60%"></div></div>
+    <div class="story"><div class="sk" style="width:80%;height:18px"></div><div class="sk" style="width:50%"></div></div>
+  </div>
+</main>
+
+<div class="tabbar">
+  <nav aria-label="Hoofdmenu">
+    <button class="tab" type="button" data-view="foryou"><svg class="i"><use href="#i-foryou"/></svg>Voor jou</button>
+    <button class="tab" type="button" data-view="latest"><svg class="i"><use href="#i-latest"/></svg>Nieuwste</button>
+    <button class="tab" type="button" data-view="discover"><svg class="i"><use href="#i-discover"/></svg>Ontdek</button>
+    <button class="tab" type="button" data-view="saved"><svg class="i"><use href="#i-saved"/></svg>Bewaard</button>
+    <button class="tab" type="button" data-view="sources"><svg class="i"><use href="#i-sources"/></svg>Bronnen</button>
+  </nav>
+</div>
+<div class="reader" id="reader" role="dialog" aria-modal="true" aria-label="Artikel" hidden></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+<!--APP-END-->
+</body>
+</html>
