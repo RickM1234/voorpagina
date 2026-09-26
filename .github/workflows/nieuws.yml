@@ -50,6 +50,7 @@ jobs:
           REPO="${GITHUB_REPOSITORY#*/}"
           export PREV_URL="https://${OWNER}.github.io/${REPO}/data/articles.json"
           python scripts/fetch_news.py
+          mkdir -p site/data/r
 
       - name: Artikelteksten bewaren voor volgende run
         uses: actions/cache/save@v4
