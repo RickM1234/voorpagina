@@ -338,3 +338,4 @@ body.reading { overflow: hidden; }
 .src-chips .chip { height: 30px; padding-inline: 8px 11px; font-size: 13px; gap: 7px; }
 .src-chips .chip .src-mark { width: 18px; height: 18px; font-size: 9.5px; }
 .src-chips .chip[aria-pressed="true"] .src-mark { box-shadow: 0 0 0 1.5px var(--bg); }
+.chips { position: relative; }
