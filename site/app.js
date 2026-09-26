@@ -151,7 +151,7 @@
     return out;
   }
   function repScore(a) {
-    return (S.w["s:" + a.src] || 0) * 1.5 + (a.img ? 0.6 : 0) + Math.min(a.summary.length, 240) / 400 + (SRC[a.src].paywall ? -0.25 : 0) + (a.via ? -0.3 : 0);
+    return (srcFilter !== "all" && a.src === srcFilter ? 10 : 0) + (S.w["s:" + a.src] || 0) * 1.5 + (a.img ? 0.6 : 0) + Math.min(a.summary.length, 240) / 400 + (SRC[a.src].paywall ? -0.25 : 0) + (a.via ? -0.3 : 0);
   }
   const vote = (st) => { for (const a of st.all) if (S.votes[a.id]) return S.votes[a.id]; return 0; };
   const isRead = (st) => st.all.some((a) => S.read[a.id]);
@@ -245,6 +245,7 @@
   // ---------- weergave ----------
   let view = ["foryou", "latest", "discover", "saved", "sources"].includes(location.hash.slice(1)) ? location.hash.slice(1) : S.view || "foryou";
   let topicFilter = "all";
+  let srcFilter = "all";
   let limit = 40;
   const expanded = new Set();
   const hiddenNow = new Map(); // key -> {story, undo, reason}
@@ -315,7 +316,29 @@
       ids.map((id) => `<button class="chip" type="button" data-act="topic" data-topic="${id}" aria-pressed="${topicFilter === id}">${esc(TOPIC[id].label)}<span class="n">${counts[id]}</span></button>`).join("") +
       `</div>`;
   }
-  const byTopic = (st) => topicFilter === "all" || st.all.some((a) => a.topics.includes(topicFilter));
+  const byTopic = (st) => (topicFilter === "all" || st.all.some((a) => a.topics.includes(topicFilter))) &&
+    (srcFilter === "all" || st.all.some((a) => a.src === srcFilter && srcOn(a.src)));
+
+  function srcChipsHTML(stories) {
+    const counts = {};
+    for (const st of stories) for (const id of new Set(st.all.filter((a) => srcOn(a.src)).map((a) => a.src))) counts[id] = (counts[id] || 0) + 1;
+    const ids = DATA.sources.map((s) => s.id).filter((id) => counts[id]);
+    if (srcFilter !== "all" && !counts[srcFilter]) srcFilter = "all";
+    if (ids.length < 2) return "";
+    return `<div class="chips src-chips" role="toolbar" aria-label="Bron">` +
+      `<button class="chip" type="button" data-act="srcfilter" data-src="all" aria-pressed="${srcFilter === "all"}">Alle bronnen</button>` +
+      ids.map((id) => `<button class="chip" type="button" data-act="srcfilter" data-src="${esc(id)}" aria-pressed="${srcFilter === id}">${srcMark(SRC[id])}${esc(SRC[id].name)}<span class="n">${counts[id]}</span></button>`).join("") +
+      `</div>`;
+  }
+
+  function filtersHTML(stories) {
+    const t = topicFilter, sf = srcFilter;
+    srcFilter = "all"; const topicRail = chipsHTML(stories.filter((st) => sf === "all" || st.all.some((a) => a.src === sf)));
+    const t2 = topicFilter; srcFilter = sf; topicFilter = "all";
+    const srcRail = srcChipsHTML(stories.filter((st) => t === "all" || st.all.some((a) => a.topics.includes(t))));
+    topicFilter = t2;
+    return topicRail + srcRail;
+  }
 
   function previewNote() {
     return DATA.preview ? `<div class="preview-note">${esc(DATA.preview)}</div>` : "";
@@ -324,6 +347,7 @@
   function renderForYou() {
     const stories = buildStories(articlesFor(true)).filter((st) => vote(st) !== -1 || hiddenNow.has(st.key));
     if (!stories.length) return emptyFollow();
+    const filters = filtersHTML(stories);
     let list = diversify(stories.filter(byTopic));
     // de openingskaart: de best passende met foto uit de top 3
     const li = list.slice(0, 3).findIndex((st) => st.rep.img && !isRead(st) && !hiddenNow.has(st.key));
@@ -331,7 +355,7 @@
     const shown = list.slice(0, limit);
     let html = previewNote();
     if (!S.tipDone) html += `<div class="tip"><span class="ic">${icon("spark")}</span><p><strong>Maak dit jouw krant</strong>Geef een duim omhoog bij wat je boeit en omlaag bij wat je niet wilt zien. Na een handvol duimpjes zet Voor jou jouw onderwerpen en bronnen bovenaan.</p><button class="icon-btn" type="button" data-act="tip" aria-label="Tip sluiten">${icon("x")}</button></div>`;
-    html += chipsHTML(stories) + `<div class="feed">` +
+    html += filters + `<div class="feed">` +
       shown.map((st, i) => storyHTML(st, { lead: i === 0 && !!st.rep.img, reason: true })).join("") + `</div>`;
     if (list.length > limit) html += `<div class="load-more"><button class="btn ghost" type="button" data-act="more">Meer laden</button></div>`;
     return html;
@@ -340,10 +364,11 @@
   function renderLatest() {
     const stories = buildStories(articlesFor(true)).filter((st) => vote(st) !== -1 || hiddenNow.has(st.key));
     if (!stories.length) return emptyFollow();
+    const filters = filtersHTML(stories);
     const list = stories.filter(byTopic).sort((x, y) => y.ts - x.ts).slice(0, limit + 40);
     const now = new Date(), todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 1000;
     const label = (ts) => (Date.now() / 1000 - ts < 3600 ? "Afgelopen uur" : ts >= todayStart ? "Eerder vandaag" : ts >= todayStart - 86400 ? "Gisteren" : "Eerder");
-    let html = previewNote() + chipsHTML(stories) + `<div class="feed">`, cur = "";
+    let html = previewNote() + filters + `<div class="feed">`, cur = "";
     for (const st of list) {
       const l = label(st.ts);
       if (l !== cur) { html += `<div class="section-label">${l}</div>`; cur = l; }
@@ -511,6 +536,10 @@
     savedTab.querySelector(".badge")?.remove();
     if (n) savedTab.insertAdjacentHTML("beforeend", `<span class="badge">${n}</span>`);
     if (keepScroll) window.scrollTo(0, y);
+    document.querySelectorAll(".chips").forEach((rail) => {
+      const on = rail.querySelector('[aria-pressed="true"]');
+      if (on && on.dataset.topic !== "all" && on.dataset.src !== "all") rail.scrollLeft = on.offsetLeft - 16 - (rail.clientWidth - on.offsetWidth) / 3;
+    });
   }
 
   function setView(v) {
@@ -714,6 +743,7 @@
       case "unsave": delete S.saved[key]; save(); render(true); break;
       case "expand": expanded.has(key) ? expanded.delete(key) : expanded.add(key); render(true); break;
       case "topic": topicFilter = b.dataset.topic; limit = 40; render(true); break;
+      case "srcfilter": srcFilter = b.dataset.src; limit = 40; render(true); break;
       case "more": limit += 30; render(true); break;
       case "tip": S.tipDone = true; save(); render(true); break;
       case "go": setView(b.dataset.view); break;
